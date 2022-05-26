@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext } from "react"
+import "antd/dist/antd.min.css"
+
+import Story from "./components/Story"
+import Layout from "./layout/index"
+import Card from "./components/Cards"
+import { ContextData } from "./context/index"
 
 function App() {
+  const { story, feeds } = useContext(ContextData)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Layout>
+      {story.length > 0 && <Story story={story} />}
+      <div
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {feeds.length > 0 &&
+          feeds.map((feed, i) => <Card key={i} feed={feed} i={i} />)}
+      </div>
+    </Layout>
+  )
 }
 
-export default App;
+export default App
